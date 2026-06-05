@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>
+Veekshith S Shetty | AI Verification Command Center
+</title>
+
+<script src="https://cdn.tailwindcss.com"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+
+<style>
+
+:root{
+
+--green:#10ff9c;
+--cyan:#00d9ff;
+--purple:#8b5cf6;
+--bg:#02030a;
+
+}
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+}
+
+html{
+scroll-behavior:smooth;
+}
+
+body{
+
+background:var(--bg);
+font-family:'Orbitron',sans-serif;
+color:white;
+overflow-x:hidden;
+
+}
+
+/* ================================= */
+/* BACKGROUND */
+/* ================================= */
+
+body::before{
+
+content:"";
+
+position:fixed;
+
+width:100%;
+height:100%;
+
+background:
+
+radial-gradient(circle at 20% 20%,rgba(0,255,200,.12),transparent 30%),
+
+radial-gradient(circle at 80% 40%,rgba(139,92,246,.12),transparent 35%),
+
+radial-gradient(circle at 50% 80%,rgba(0,217,255,.12),transparent 40%);
+
+z-index:-2;
+
+}
+
+/* ================================= */
+/* GRID */
+/* ================================= */
+
+.grid-bg{
+
+background-image:
+
+linear-gradient(rgba(255,255,255,.03) 1px, transparent 1px),
+
+linear-gradient(90deg,rgba(255,255,255,.03) 1px, transparent 1px);
+
+background-size:40px 40px;
+
+}
+
+/* ================================= */
+/* GLASS */
+/* ================================= */
+
+.glass{
+
+background:rgba(255,255,255,.04);
+
+backdrop-filter:blur(18px);
+
+border:1px solid rgba(255,255,255,.08);
+
+}
+
+/* ================================= */
+/* PREMIUM GLOW */
+/* ================================= */
+
+.neon-title{
+
+background:
+linear-gradient(
+90deg,
+#00d9ff,
+#10ff9c,
+#8b5cf6
+);
+
+-webkit-background-clip:text;
+-webkit-text-fill-color:transparent;
+
+}
+
+.glow-border{
+
+position:relative;
+
+overflow:hidden;
+
+}
+
+.glow-border::before{
+
+content:"";
+
+position:absolute;
+
+inset:-2px;
+
+background:
+
+linear-gradient(
+90deg,
+#00d9ff,
+#10ff9c,
+#8b5cf6,
+#00d9ff
+);
+
+background-size:300%;
+
+animation:borderMove 8s linear infinite;
+
+z-index:-1;
+
+border-radius:inherit;
+
+}
+
+@keyframes borderMove{
+
+0%{
+background-position:0%;
+}
+
+100%{
+background-position:300%;
+}
+
+}
+
+/* ================================= */
+/* TERMINAL FONT */
+/* ================================= */
+
+.tech{
+
+font-family:'Share Tech Mono',monospace;
+
+}
+
+/* ================================= */
+/* SATELLITE */
+/* ================================= */
+
+.protocol{
+
+position:absolute;
+
+padding:10px 16px;
+
+border-radius:999px;
+
+font-size:12px;
+
+font-family:'Share Tech Mono',monospace;
+
+background:rgba(0,0,0,.4);
+
+border:1px solid rgba(255,255,255,.15);
+
+backdrop-filter:blur(10px);
+
+}
+
+</style>
+
+</head>
+
+<body class="grid-bg">
+
+<!-- ========================================= -->
+<!-- THREE.JS CANVAS -->
+<!-- ========================================= -->
+
+<canvas
+id="threeCanvas"
+class="fixed inset-0 w-full h-full z-0">
+</canvas>
+
+<!-- ========================================= -->
+<!-- BOOT SCREEN -->
+<!-- ========================================= -->
+
+<div
+id="bootScreen"
+class="fixed inset-0 bg-black z-[9999] flex items-center justify-center px-6">
+
+<div
+class="glass glow-border rounded-[40px] p-10 max-w-4xl w-full">
+
+<div class="flex justify-between items-center mb-10">
+
+<div>
+
+<h2 class="text-3xl font-black neon-title">
+
+AI_VERIFICATION_ENGINE
+
+</h2>
+
+<p class="tech text-sm text-cyan-400 mt-2">
+
+COMMAND CENTER BOOTLOADER
+
+</p>
+
+</div>
+
+<div class="tech text-xs text-gray-500">
+
+BUILD_2026.2
+
+</div>
+
+</div>
+
+<div class="space-y-3 tech text-sm">
+
+<p id="b1">> Loading SystemVerilog Compiler...</p>
+
+<p id="b2" class="opacity-0">> Loading UVM Packages...</p>
+
+<p id="b3" class="opacity-0">> Register Model Synchronization...</p>
+
+<p id="b4" class="opacity-0">> Building AI Coverage Engine...</p>
+
+<p id="b5" class="opacity-0">> Starting Regression Cluster...</p>
+
+<p id="b6" class="opacity-0 text-green-400">
+> STATUS : READY
+</p>
+
+</div>
+
+<div class="h-3 bg-black rounded-full mt-8 overflow-hidden">
+
+<div
+id="bootBar"
+class="h-full bg-gradient-to-r from-cyan-400 via-green-400 to-purple-500"
+style="width:0%">
+</div>
+
+</div>
+
+<button
+
+id="enterBtn"
+
+class="mt-8 opacity-0 w-full py-4 rounded-2xl bg-gradient-to-r from-cyan-400 via-green-400 to-purple-500 text-black font-black tracking-[4px]">
+
+ENTER COMMAND CENTER
+
+</button>
+
+</div>
+
+</div>
+
+<!-- ========================================= -->
+<!-- NAVIGATION -->
+<!-- ========================================= -->
+
+<header
+class="fixed top-0 left-0 w-full z-50">
+
+<div
+class="glass border-b border-white/10">
+
+<div
+class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+
+<div>
+
+<h2 class="font-black text-xl neon-title">
+
+VSS
+
+</h2>
+
+</div>
+
+<nav
+class="hidden md:flex gap-8 tech text-xs tracking-[3px]">
+
+<a href="#hero">OVERVIEW</a>
+<a href="#skills">COMPETENCIES</a>
+<a href="#dashboard">DASHBOARD</a>
+<a href="#projects">PROJECTS</a>
+<a href="#timeline">TIMELINE</a>
+<a href="#contact">CONTACT</a>
+
+</nav>
+
+<div
+class="tech text-xs text-green-400">
+
+SYSTEM PASS
+
+</div>
+
+</div>
+
+</div>
+
+</header>
+
+<!-- ========================================= -->
+<!-- HERO -->
+<!-- ========================================= -->
+
+<section
+id="hero"
+class="relative min-h-screen flex items-center">
+
+<div
+class="max-w-7xl mx-auto px-6 w-full relative z-20">
+
+<div
+class="grid lg:grid-cols-2 gap-20 items-center">
+
+<!-- LEFT -->
+
+<div>
+
+<div
+class="glass inline-block px-4 py-2 rounded-full tech text-xs text-cyan-400">
+
+AI POWERED DESIGN VERIFICATION
+
+</div>
+
+<h1
+id="heroTitle"
+class="mt-8 text-6xl md:text-8xl font-black leading-none opacity-0">
+
+SILICON
+
+<span class="neon-title">
+INTELLIGENCE
+</span>
+
+</h1>
+
+<p
+id="heroDesc"
+class="mt-8 text-xl text-gray-400 max-w-xl opacity-0">
+
+Building next-generation verification
+platforms combining UVM,
+SystemVerilog,
+Artificial Intelligence,
+Automation
+and SoC Validation.
+
+</p>
+
+<div
+id="heroBtns"
+class="flex gap-4 mt-10 opacity-0 flex-wrap">
+
+<button
+class="px-8 py-4 rounded-2xl bg-gradient-to-r from-cyan-400 to-green-400 text-black font-bold">
+
+VIEW PROJECTS
+
+</button>
+
+<button
+class="px-8 py-4 rounded-2xl glass">
+
+CONTACT
+
+</button>
+
+</div>
+
+</div>
+
+<!-- RIGHT -->
+
+<div
+class="relative flex justify-center">
+
+<!-- CHIP -->
+
+<div
+
+id="chip"
+
+class="relative w-[420px] h-[420px] rounded-[50px] glass glow-border flex items-center justify-center">
+
+<div>
+
+<h2 class="text-6xl font-black text-center">
+
+SOC
+
+</h2>
+
+<p class="tech text-center text-cyan-400 mt-3">
+
+VERIFICATION CORE
+
+</p>
+
+</div>
+
+</div>
+
+<!-- SATELLITES -->
+
+<div class="protocol top-0 left-1/2 -translate-x-1/2">
+AXI4
+</div>
+
+<div class="protocol bottom-0 left-1/2 -translate-x-1/2">
+UVM
+</div>
+
+<div class="protocol left-0 top-1/2 -translate-y-1/2">
+SVA
+</div>
+
+<div class="protocol right-0 top-1/2 -translate-y-1/2">
+APB
+</div>
+
+<div class="protocol top-[15%] right-[10%]">
+AI
+</div>
+
+<div class="protocol bottom-[15%] left-[10%]">
+RAL
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+<!-- ========================================= -->
+<!-- END OF PART 1 -->
+<!-- PART 2 NEXT -->
+<!-- ========================================= -->
