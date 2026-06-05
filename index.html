@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>
-Veekshith S Shetty | AI Verification Command Center
+Veekshith S Shetty | Silicon Verification Command Center
 </title>
 
 <script src="https://cdn.tailwindcss.com"></script>
@@ -18,24 +18,9 @@ Veekshith S Shetty | AI Verification Command Center
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
 
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&family=Share+Tech+Mono&display=swap" rel="stylesheet">
 
 <style>
-
-:root{
-
---green:#10ff9c;
---cyan:#00d9ff;
---purple:#8b5cf6;
---bg:#02030a;
-
-}
-
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
-}
 
 html{
 scroll-behavior:smooth;
@@ -43,166 +28,111 @@ scroll-behavior:smooth;
 
 body{
 
-background:var(--bg);
+margin:0;
+padding:0;
+background:#010204;
+overflow-x:hidden;
 font-family:'Orbitron',sans-serif;
 color:white;
-overflow-x:hidden;
 
 }
 
-/* ================================= */
-/* BACKGROUND */
-/* ================================= */
+.tech{
+font-family:'Share Tech Mono',monospace;
+}
 
-body::before{
+.loading{
+overflow:hidden;
+}
 
-content:"";
+.neon{
 
-position:fixed;
-
-width:100%;
-height:100%;
-
-background:
-
-radial-gradient(circle at 20% 20%,rgba(0,255,200,.12),transparent 30%),
-
-radial-gradient(circle at 80% 40%,rgba(139,92,246,.12),transparent 35%),
-
-radial-gradient(circle at 50% 80%,rgba(0,217,255,.12),transparent 40%);
-
-z-index:-2;
+text-shadow:
+0 0 10px #10b981,
+0 0 20px #10b981,
+0 0 40px #10b981;
 
 }
 
-/* ================================= */
-/* GRID */
-/* ================================= */
+.glass{
+
+background:rgba(10,15,25,.55);
+
+backdrop-filter:blur(18px);
+
+border:1px solid rgba(16,185,129,.15);
+
+}
 
 .grid-bg{
 
 background-image:
 
-linear-gradient(rgba(255,255,255,.03) 1px, transparent 1px),
+linear-gradient(rgba(16,185,129,.04) 1px,transparent 1px),
 
-linear-gradient(90deg,rgba(255,255,255,.03) 1px, transparent 1px);
+linear-gradient(90deg,rgba(16,185,129,.04) 1px,transparent 1px);
 
 background-size:40px 40px;
 
 }
 
-/* ================================= */
-/* GLASS */
-/* ================================= */
+.chip-border{
 
-.glass{
+border:1px solid rgba(16,185,129,.2);
 
-background:rgba(255,255,255,.04);
-
-backdrop-filter:blur(18px);
-
-border:1px solid rgba(255,255,255,.08);
+box-shadow:
+0 0 20px rgba(16,185,129,.15),
+inset 0 0 20px rgba(16,185,129,.08);
 
 }
 
-/* ================================= */
-/* PREMIUM GLOW */
-/* ================================= */
-
-.neon-title{
-
-background:
-linear-gradient(
-90deg,
-#00d9ff,
-#10ff9c,
-#8b5cf6
-);
-
--webkit-background-clip:text;
--webkit-text-fill-color:transparent;
-
-}
-
-.glow-border{
-
-position:relative;
-
-overflow:hidden;
-
-}
-
-.glow-border::before{
-
-content:"";
+.protocol-orbit{
 
 position:absolute;
 
-inset:-2px;
-
-background:
-
-linear-gradient(
-90deg,
-#00d9ff,
-#10ff9c,
-#8b5cf6,
-#00d9ff
-);
-
-background-size:300%;
-
-animation:borderMove 8s linear infinite;
-
-z-index:-1;
-
-border-radius:inherit;
-
-}
-
-@keyframes borderMove{
-
-0%{
-background-position:0%;
-}
-
-100%{
-background-position:300%;
-}
-
-}
-
-/* ================================= */
-/* TERMINAL FONT */
-/* ================================= */
-
-.tech{
-
-font-family:'Share Tech Mono',monospace;
-
-}
-
-/* ================================= */
-/* SATELLITE */
-/* ================================= */
-
-.protocol{
-
-position:absolute;
-
-padding:10px 16px;
+border:1px dashed rgba(16,185,129,.15);
 
 border-radius:999px;
 
-font-size:12px;
+}
+
+.protocol-node{
+
+position:absolute;
+
+padding:8px 14px;
+
+background:#02140f;
+
+border:1px solid rgba(16,185,129,.2);
+
+border-radius:999px;
+
+font-size:11px;
+
+letter-spacing:2px;
+
+color:#10b981;
 
 font-family:'Share Tech Mono',monospace;
 
-background:rgba(0,0,0,.4);
+}
 
-border:1px solid rgba(255,255,255,.15);
+#threeCanvas{
 
-backdrop-filter:blur(10px);
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+z-index:0;
+
+}
+
+.hero-content{
+
+position:relative;
+z-index:20;
 
 }
 
@@ -210,77 +140,77 @@ backdrop-filter:blur(10px);
 
 </head>
 
-<body class="grid-bg">
+<body class="loading">
 
-<!-- ========================================= -->
-<!-- THREE.JS CANVAS -->
-<!-- ========================================= -->
+<canvas id="threeCanvas"></canvas>
 
-<canvas
-id="threeCanvas"
-class="fixed inset-0 w-full h-full z-0">
-</canvas>
-
-<!-- ========================================= -->
+<!-- ================================================= -->
 <!-- BOOT SCREEN -->
-<!-- ========================================= -->
+<!-- ================================================= -->
 
 <div
 id="bootScreen"
-class="fixed inset-0 bg-black z-[9999] flex items-center justify-center px-6">
+class="fixed inset-0 z-[9999] bg-black flex items-center justify-center px-6">
 
 <div
-class="glass glow-border rounded-[40px] p-10 max-w-4xl w-full">
+class="glass rounded-3xl max-w-4xl w-full p-10">
 
-<div class="flex justify-between items-center mb-10">
+<div
+class="flex justify-between mb-8">
 
 <div>
 
-<h2 class="text-3xl font-black neon-title">
-
-AI_VERIFICATION_ENGINE
-
+<h2 class="text-emerald-400 text-2xl font-black">
+CRV_ENGINE_BOOT
 </h2>
 
-<p class="tech text-sm text-cyan-400 mt-2">
-
-COMMAND CENTER BOOTLOADER
-
+<p class="tech text-xs text-emerald-500">
+DESIGN VERIFICATION COMMAND CENTER
 </p>
 
 </div>
 
 <div class="tech text-xs text-gray-500">
-
-BUILD_2026.2
-
+BUILD_2026.1
 </div>
 
 </div>
 
-<div class="space-y-3 tech text-sm">
+<div
+class="space-y-3 tech text-sm text-emerald-400">
 
-<p id="b1">> Loading SystemVerilog Compiler...</p>
+<p id="log1">
+> Loading SystemVerilog packages...
+</p>
 
-<p id="b2" class="opacity-0">> Loading UVM Packages...</p>
+<p id="log2" class="opacity-0">
+> Building UVM topology...
+</p>
 
-<p id="b3" class="opacity-0">> Register Model Synchronization...</p>
+<p id="log3" class="opacity-0">
+> Register model synchronization...
+</p>
 
-<p id="b4" class="opacity-0">> Building AI Coverage Engine...</p>
+<p id="log4" class="opacity-0">
+> Spawning SVA engines...
+</p>
 
-<p id="b5" class="opacity-0">> Starting Regression Cluster...</p>
+<p id="log5" class="opacity-0">
+> Initializing AXI/AHB/APB fabrics...
+</p>
 
-<p id="b6" class="opacity-0 text-green-400">
-> STATUS : READY
+<p id="log6" class="opacity-0 text-white font-bold">
+> Coverage Database Loaded...
 </p>
 
 </div>
 
-<div class="h-3 bg-black rounded-full mt-8 overflow-hidden">
+<div
+class="mt-8 h-3 bg-black rounded-full overflow-hidden">
 
 <div
-id="bootBar"
-class="h-full bg-gradient-to-r from-cyan-400 via-green-400 to-purple-500"
+id="progressBar"
+class="h-full bg-emerald-400"
 style="width:0%">
 </div>
 
@@ -290,9 +220,9 @@ style="width:0%">
 
 id="enterBtn"
 
-class="mt-8 opacity-0 w-full py-4 rounded-2xl bg-gradient-to-r from-cyan-400 via-green-400 to-purple-500 text-black font-black tracking-[4px]">
+class="opacity-0 mt-8 w-full py-4 rounded-xl bg-emerald-500 text-black font-black tracking-widest">
 
-ENTER COMMAND CENTER
+INITIALIZE COMMAND CENTER
 
 </button>
 
@@ -300,31 +230,27 @@ ENTER COMMAND CENTER
 
 </div>
 
-<!-- ========================================= -->
-<!-- NAVIGATION -->
-<!-- ========================================= -->
+<!-- ================================================= -->
+<!-- HEADER -->
+<!-- ================================================= -->
 
 <header
-class="fixed top-0 left-0 w-full z-50">
 
-<div
-class="glass border-b border-white/10">
+class="fixed top-0 left-0 w-full z-50 glass border-b border-emerald-500/10">
 
 <div
 class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
 
 <div>
 
-<h2 class="font-black text-xl neon-title">
-
+<h1 class="font-black text-xl neon">
 VSS
-
-</h2>
+</h1>
 
 </div>
 
 <nav
-class="hidden md:flex gap-8 tech text-xs tracking-[3px]">
+class="hidden md:flex gap-10 tech text-xs tracking-[3px]">
 
 <a href="#hero">OVERVIEW</a>
 <a href="#skills">COMPETENCIES</a>
@@ -336,11 +262,9 @@ class="hidden md:flex gap-8 tech text-xs tracking-[3px]">
 </nav>
 
 <div
-class="tech text-xs text-green-400">
+class="tech text-xs text-emerald-400">
 
-SYSTEM PASS
-
-</div>
+SIM_STATUS : PASS
 
 </div>
 
@@ -348,79 +272,89 @@ SYSTEM PASS
 
 </header>
 
-<!-- ========================================= -->
-<!-- HERO -->
-<!-- ========================================= -->
+<!-- ================================================= -->
+<!-- HERO SECTION -->
+<!-- ================================================= -->
 
 <section
+
 id="hero"
-class="relative min-h-screen flex items-center">
+
+class="relative min-h-screen flex items-center grid-bg overflow-hidden">
 
 <div
-class="max-w-7xl mx-auto px-6 w-full relative z-20">
+class="max-w-7xl mx-auto px-6 w-full hero-content">
 
 <div
 class="grid lg:grid-cols-2 gap-20 items-center">
 
-<!-- LEFT -->
+<!-- LEFT SIDE -->
 
 <div>
 
 <div
-class="glass inline-block px-4 py-2 rounded-full tech text-xs text-cyan-400">
+class="glass inline-block px-4 py-2 rounded-full tech text-xs text-emerald-400 mb-8">
 
-AI POWERED DESIGN VERIFICATION
+DESIGN_VERIFICATION_ENGINEER
 
 </div>
 
 <h1
+
 id="heroTitle"
-class="mt-8 text-6xl md:text-8xl font-black leading-none opacity-0">
+
+class="text-6xl md:text-8xl font-black leading-none opacity-0">
 
 SILICON
 
-<span class="neon-title">
-INTELLIGENCE
+<span class="text-emerald-400 neon">
+VERIFIED
 </span>
 
 </h1>
 
 <p
-id="heroDesc"
-class="mt-8 text-xl text-gray-400 max-w-xl opacity-0">
 
-Building next-generation verification
-platforms combining UVM,
-SystemVerilog,
-Artificial Intelligence,
-Automation
-and SoC Validation.
+id="heroDesc"
+
+class="mt-8 text-gray-400 text-xl max-w-xl opacity-0">
+
+Building intelligent verification environments
+that validate complex SoCs, DMA engines,
+interconnects and register architectures
+before silicon tapeout.
 
 </p>
 
 <div
-id="heroBtns"
-class="flex gap-4 mt-10 opacity-0 flex-wrap">
+id="heroButtons"
+class="mt-10 flex flex-wrap gap-4 opacity-0">
 
-<button
-class="px-8 py-4 rounded-2xl bg-gradient-to-r from-cyan-400 to-green-400 text-black font-bold">
+<a
+
+href="#projects"
+
+class="px-8 py-4 bg-emerald-500 text-black rounded-xl font-bold">
 
 VIEW PROJECTS
 
-</button>
+</a>
 
-<button
-class="px-8 py-4 rounded-2xl glass">
+<a
+
+href="#contact"
+
+class="px-8 py-4 border border-emerald-500 rounded-xl">
 
 CONTACT
 
-</button>
+</a>
 
 </div>
 
 </div>
 
-<!-- RIGHT -->
+<!-- RIGHT SIDE -->
 
 <div
 class="relative flex justify-center">
@@ -429,52 +363,241 @@ class="relative flex justify-center">
 
 <div
 
-id="chip"
+id="chipCore"
 
-class="relative w-[420px] h-[420px] rounded-[50px] glass glow-border flex items-center justify-center">
+class="relative w-[420px] h-[420px] chip-border glass rounded-[40px]">
+
+<div
+
+class="absolute inset-10 border border-emerald-500/20 rounded-3xl">
+
+</div>
+
+<div
+
+class="absolute inset-20 border border-emerald-500/20 rounded-2xl">
+
+</div>
+
+<div
+
+class="absolute inset-0 flex items-center justify-center">
 
 <div>
 
-<h2 class="text-6xl font-black text-center">
-
-SOC
-
+<h2 class="text-5xl font-black text-center">
+SoC
 </h2>
 
-<p class="tech text-center text-cyan-400 mt-3">
-
-VERIFICATION CORE
-
+<p class="tech text-center text-emerald-400 mt-2">
+VERIFICATION HUB
 </p>
 
 </div>
 
 </div>
 
-<!-- SATELLITES -->
+</div>
 
-<div class="protocol top-0 left-1/2 -translate-x-1/2">
+<!-- ORBITS -->
+
+<div
+class="protocol-orbit w-[520px] h-[520px]"></div>
+
+<div
+class="protocol-orbit w-[620px] h-[620px]"></div>
+
+<div
+class="protocol-node top-0 left-1/2 -translate-x-1/2">
 AXI4
 </div>
 
-<div class="protocol bottom-0 left-1/2 -translate-x-1/2">
+<div
+class="protocol-node bottom-0 left-1/2 -translate-x-1/2">
 UVM
 </div>
 
-<div class="protocol left-0 top-1/2 -translate-y-1/2">
+<div
+class="protocol-node top-1/2 left-0 -translate-y-1/2">
 SVA
 </div>
 
-<div class="protocol right-0 top-1/2 -translate-y-1/2">
+<div
+class="protocol-node top-1/2 right-0 -translate-y-1/2">
 APB
 </div>
 
-<div class="protocol top-[15%] right-[10%]">
-AI
+<div
+class="protocol-node top-[15%] right-[10%]">
+RAL
 </div>
 
-<div class="protocol bottom-[15%] left-[10%]">
+<div
+class="protocol-node bottom-[15%] left-[10%]">
+PYTHON
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+<!-- STATUS BAR -->
+
+<div
+class="absolute bottom-10 left-1/2 -translate-x-1/2">
+
+<div
+class="glass rounded-2xl px-8 py-4 flex gap-10 tech text-xs">
+
+<div>
+REGRESSIONS : 5000+
+</div>
+
+<div>
+ASSERTIONS : PASS
+</div>
+
+<div>
+COVERAGE : 100%
+</div>
+
+<div>
+TAPEOUT : READY
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+<!-- ================================================= -->
+<!-- CORE COMPETENCIES -->
+<!-- ================================================= -->
+
+<section
+id="skills"
+class="relative py-32 px-6 overflow-hidden">
+
+<div class="max-w-7xl mx-auto">
+
+<div class="mb-20">
+
+<p class="tech text-emerald-400 text-xs tracking-[4px]">
+// VERIFICATION_ARCHITECTURE
+</p>
+
+<h2 class="text-5xl md:text-7xl font-black mt-4">
+
+CORE
+
+<span class="text-emerald-400 neon">
+COMPETENCIES
+</span>
+
+</h2>
+
+</div>
+
+<div class="grid lg:grid-cols-2 gap-12">
+
+<!-- LEFT SIDE -->
+
+<div class="glass rounded-3xl p-10 chip-border">
+
+<h3 class="text-3xl font-black mb-8">
+Verification Stack
+</h3>
+
+<div class="space-y-5 tech">
+
+<div class="border-l-2 border-emerald-500 pl-6">
+
+<div class="text-xl text-emerald-400">
+Verification
+</div>
+
+<div class="ml-6 mt-4 space-y-3">
+
+<div>├── SystemVerilog</div>
+<div>├── UVM</div>
+<div>├── UVM-RAL</div>
+<div>├── SVA</div>
+<div>├── Functional Coverage</div>
+<div>├── Constrained Random</div>
+<div>├── Scoreboarding</div>
+<div>├── Python Automation</div>
+<div>├── AI Verification</div>
+<div>└── Debug & Root Cause Analysis</div>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+<!-- RIGHT SIDE -->
+
+<div class="glass rounded-3xl p-10 chip-border">
+
+<h3 class="text-3xl font-black mb-8">
+Protocol Expertise
+</h3>
+
+<div class="grid grid-cols-2 gap-4">
+
+<div class="glass p-6 rounded-xl text-center">
+
+<div class="text-4xl text-emerald-400 font-black">
+AXI
+</div>
+
+<div class="tech text-xs mt-2">
+FULL FEATURED
+</div>
+
+</div>
+
+<div class="glass p-6 rounded-xl text-center">
+
+<div class="text-4xl text-cyan-400 font-black">
+AHB
+</div>
+
+<div class="tech text-xs mt-2">
+PIPELINED BUS
+</div>
+
+</div>
+
+<div class="glass p-6 rounded-xl text-center">
+
+<div class="text-4xl text-yellow-400 font-black">
+APB
+</div>
+
+<div class="tech text-xs mt-2">
+REGISTER ACCESS
+</div>
+
+</div>
+
+<div class="glass p-6 rounded-xl text-center">
+
+<div class="text-4xl text-purple-400 font-black">
 RAL
+</div>
+
+<div class="tech text-xs mt-2">
+REGISTER MODEL
+</div>
+
+</div>
+
 </div>
 
 </div>
@@ -485,7 +608,1350 @@ RAL
 
 </section>
 
-<!-- ========================================= -->
-<!-- END OF PART 1 -->
-<!-- PART 2 NEXT -->
-<!-- ========================================= -->
+<!-- ================================================= -->
+<!-- VERIFICATION COMMAND DASHBOARD -->
+<!-- ================================================= -->
+
+<section
+id="dashboard"
+class="py-32 px-6">
+
+<div class="max-w-7xl mx-auto">
+
+<div class="mb-20">
+
+<p class="tech text-emerald-400 text-xs tracking-[4px]">
+// LIVE_REGRESSION_DASHBOARD
+</p>
+
+<h2 class="text-5xl md:text-7xl font-black mt-4">
+
+VERIFICATION
+
+<span class="text-emerald-400 neon">
+DASHBOARD
+</span>
+
+</h2>
+
+</div>
+
+<div class="grid lg:grid-cols-4 gap-8">
+
+<!-- COUNTER 1 -->
+
+<div class="glass rounded-3xl p-8 text-center">
+
+<div
+class="counter text-6xl font-black text-emerald-400"
+data-target="12584">
+0
+</div>
+
+<p class="mt-4 tech text-xs">
+TESTCASES EXECUTED
+</p>
+
+</div>
+
+<!-- COUNTER 2 -->
+
+<div class="glass rounded-3xl p-8 text-center">
+
+<div
+class="counter text-6xl font-black text-cyan-400"
+data-target="100">
+0
+</div>
+
+<p class="mt-4 tech text-xs">
+FUNCTIONAL COVERAGE %
+</p>
+
+</div>
+
+<!-- COUNTER 3 -->
+
+<div class="glass rounded-3xl p-8 text-center">
+
+<div
+class="counter text-6xl font-black text-yellow-400"
+data-target="32442">
+0
+</div>
+
+<p class="mt-4 tech text-xs">
+ASSERTIONS CHECKED
+</p>
+
+</div>
+
+<!-- COUNTER 4 -->
+
+<div class="glass rounded-3xl p-8 text-center">
+
+<div
+class="counter text-6xl font-black text-green-400"
+data-target="0">
+0
+</div>
+
+<p class="mt-4 tech text-xs">
+ACTIVE FAILURES
+</p>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+<!-- ================================================= -->
+<!-- COVERAGE HEATMAP -->
+<!-- ================================================= -->
+
+<section class="py-24 px-6">
+
+<div class="max-w-7xl mx-auto">
+
+<div class="glass rounded-3xl p-10">
+
+<h3 class="text-4xl font-black mb-10">
+Coverage Closure Heatmap
+</h3>
+
+<div class="grid grid-cols-8 gap-3">
+
+<div class="h-20 bg-emerald-400 rounded-xl"></div>
+<div class="h-20 bg-emerald-500 rounded-xl"></div>
+<div class="h-20 bg-green-400 rounded-xl"></div>
+<div class="h-20 bg-lime-400 rounded-xl"></div>
+<div class="h-20 bg-emerald-400 rounded-xl"></div>
+<div class="h-20 bg-green-500 rounded-xl"></div>
+<div class="h-20 bg-emerald-500 rounded-xl"></div>
+<div class="h-20 bg-emerald-400 rounded-xl"></div>
+
+<div class="h-20 bg-green-400 rounded-xl"></div>
+<div class="h-20 bg-lime-500 rounded-xl"></div>
+<div class="h-20 bg-green-500 rounded-xl"></div>
+<div class="h-20 bg-emerald-500 rounded-xl"></div>
+<div class="h-20 bg-green-400 rounded-xl"></div>
+<div class="h-20 bg-emerald-400 rounded-xl"></div>
+<div class="h-20 bg-lime-400 rounded-xl"></div>
+<div class="h-20 bg-green-500 rounded-xl"></div>
+
+</div>
+
+<div class="mt-8 tech text-sm text-emerald-400">
+Coverage Status : 100% Closure Achieved
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+<!-- ================================================= -->
+<!-- TECHNOLOGY MATRIX -->
+<!-- ================================================= -->
+
+<section
+class="py-32 px-6">
+
+<div class="max-w-7xl mx-auto">
+
+<div class="mb-20">
+
+<p class="tech text-emerald-400 text-xs tracking-[4px]">
+// SILICON_FLOORPLAN
+</p>
+
+<h2 class="text-5xl md:text-7xl font-black mt-4">
+
+TECHNOLOGY
+
+<span class="text-emerald-400 neon">
+MATRIX
+</span>
+
+</h2>
+
+</div>
+
+<div class="grid md:grid-cols-4 gap-6">
+
+<div class="glass p-10 rounded-3xl text-center chip-border">
+<div class="text-5xl font-black text-emerald-400">SV</div>
+<p class="tech mt-4">SYSTEMVERILOG</p>
+</div>
+
+<div class="glass p-10 rounded-3xl text-center chip-border">
+<div class="text-5xl font-black text-cyan-400">UVM</div>
+<p class="tech mt-4">METHODOLOGY</p>
+</div>
+
+<div class="glass p-10 rounded-3xl text-center chip-border">
+<div class="text-5xl font-black text-yellow-400">RAL</div>
+<p class="tech mt-4">REGISTER MODEL</p>
+</div>
+
+<div class="glass p-10 rounded-3xl text-center chip-border">
+<div class="text-5xl font-black text-purple-400">SVA</div>
+<p class="tech mt-4">ASSERTIONS</p>
+</div>
+
+<div class="glass p-10 rounded-3xl text-center chip-border">
+<div class="text-5xl font-black text-red-400">AXI</div>
+<p class="tech mt-4">AMBA AXI</p>
+</div>
+
+<div class="glass p-10 rounded-3xl text-center chip-border">
+<div class="text-5xl font-black text-blue-400">AHB</div>
+<p class="tech mt-4">AMBA AHB</p>
+</div>
+
+<div class="glass p-10 rounded-3xl text-center chip-border">
+<div class="text-5xl font-black text-green-400">APB</div>
+<p class="tech mt-4">AMBA APB</p>
+</div>
+
+<div class="glass p-10 rounded-3xl text-center chip-border">
+<div class="text-5xl font-black text-pink-400">AI</div>
+<p class="tech mt-4">GEN AI</p>
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+<!-- ================================================= -->
+<!-- PROTOCOL FABRIC VISUALIZER -->
+<!-- ================================================= -->
+
+<section
+class="py-32 px-6">
+
+<div class="max-w-7xl mx-auto">
+
+<div class="glass rounded-[40px] p-16">
+
+<h2 class="text-5xl font-black mb-12">
+
+PROTOCOL
+
+<span class="text-emerald-400">
+FABRIC
+</span>
+
+</h2>
+
+<div
+class="relative flex flex-col lg:flex-row justify-between items-center gap-16">
+
+<!-- MASTER -->
+
+<div
+class="w-52 h-52 glass rounded-3xl flex items-center justify-center">
+
+<div>
+
+<div class="text-4xl font-black">
+MASTER
+</div>
+
+<div class="tech text-xs text-emerald-400 mt-2">
+SEQUENCER
+</div>
+
+</div>
+
+</div>
+
+<!-- BUS -->
+
+<div class="flex-1 relative h-6 bg-emerald-900 rounded-full overflow-hidden">
+
+<div
+id="packet"
+class="absolute top-0 left-0 h-full w-20 bg-emerald-400 rounded-full shadow-[0_0_30px_#10b981]">
+</div>
+
+</div>
+
+<!-- SLAVE -->
+
+<div
+class="w-52 h-52 glass rounded-3xl flex items-center justify-center">
+
+<div>
+
+<div class="text-4xl font-black">
+SLAVE
+</div>
+
+<div class="tech text-xs text-emerald-400 mt-2">
+MONITOR
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+<div class="mt-12 tech text-center text-emerald-400">
+
+AXI / AHB / APB TRANSACTION FLOW
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+<!-- ================================================= -->
+<!-- PART 2 END -->
+<!-- PART 3 STARTS NEXT -->
+<!-- ================================================= -->
+
+<!-- ================================================= -->
+<!-- CAREER TIMELINE -->
+<!-- ================================================= -->
+
+<section
+id="timeline"
+class="relative py-32 px-6 overflow-hidden">
+
+<div class="max-w-7xl mx-auto">
+
+<div class="mb-20">
+
+<p class="tech text-emerald-400 text-xs tracking-[4px]">
+ // CAREER_EXECUTION_TIMELINE
+</p>
+
+<h2 class="text-5xl md:text-7xl font-black mt-4">
+
+CAREER
+
+<span class="text-emerald-400 neon">
+TIMELINE
+</span>
+
+</h2>
+
+</div>
+
+<div class="relative">
+
+<div class="absolute left-8 top-0 bottom-0 w-[2px] bg-emerald-500"></div>
+
+<!-- ITEM -->
+
+<div class="relative pl-24 pb-20">
+
+<div
+class="absolute left-3 top-2 w-10 h-10 rounded-full bg-emerald-400 shadow-[0_0_25px_#10b981]">
+</div>
+
+<div class="glass rounded-3xl p-8">
+
+<div class="tech text-emerald-400 mb-3">
+2024
+</div>
+
+<h3 class="text-3xl font-black">
+Bachelor of Engineering
+</h3>
+
+<p class="mt-4 text-slate-400">
+Graduated from NMAMIT, Nitte and began
+professional journey in semiconductor
+verification.
+</p>
+
+</div>
+
+</div>
+
+<!-- ITEM -->
+
+<div class="relative pl-24 pb-20">
+
+<div
+class="absolute left-3 top-2 w-10 h-10 rounded-full bg-cyan-400 shadow-[0_0_25px_#22d3ee]">
+</div>
+
+<div class="glass rounded-3xl p-8">
+
+<div class="tech text-cyan-400 mb-3">
+2024 - PRESENT
+</div>
+
+<h3 class="text-3xl font-black">
+Design Verification Engineer
+</h3>
+
+<p class="mt-4 text-slate-400">
+Developing reusable UVM environments,
+automation frameworks, AI-assisted
+verification solutions and AMBA protocol
+verification methodologies.
+</p>
+
+</div>
+
+</div>
+
+<!-- ITEM -->
+
+<div class="relative pl-24">
+
+<div
+class="absolute left-3 top-2 w-10 h-10 rounded-full bg-yellow-400 shadow-[0_0_25px_#facc15]">
+</div>
+
+<div class="glass rounded-3xl p-8">
+
+<div class="tech text-yellow-400 mb-3">
+FUTURE
+</div>
+
+<h3 class="text-3xl font-black">
+Senior Verification Architect
+</h3>
+
+<p class="mt-4 text-slate-400">
+Driving AI-powered verification methodologies
+for next-generation SoCs and complex
+interconnect architectures.
+</p>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+<!-- ================================================= -->
+<!-- FEATURED PROJECTS -->
+<!-- ================================================= -->
+
+<section
+id="projects"
+class="py-32 px-6">
+
+<div class="max-w-7xl mx-auto">
+
+<div class="mb-20">
+
+<p class="tech text-emerald-400 text-xs tracking-[4px]">
+ // FEATURED_VERIFICATION_PROJECTS
+</p>
+
+<h2 class="text-5xl md:text-7xl font-black mt-4">
+
+PROJECT
+
+<span class="text-emerald-400 neon">
+SHOWCASE
+</span>
+
+</h2>
+
+</div>
+
+<div class="grid lg:grid-cols-2 gap-10">
+
+<!-- PROJECT 1 -->
+
+<div class="glass rounded-3xl p-10 chip-border">
+
+<div class="text-emerald-400 tech mb-4">
+PROJECT_01
+</div>
+
+<h3 class="text-3xl font-black mb-6">
+AI-Integrated DMA Verification Framework
+</h3>
+
+<p class="text-slate-400 leading-8">
+
+Engineered an AI-driven verification environment
+leveraging Claude AI, SystemVerilog, UVM and
+Python to validate DMA functionality,
+interrupt handling and multi-interface
+data transfers.
+
+</p>
+
+<div class="mt-6 flex gap-3 flex-wrap">
+
+<span class="px-3 py-2 bg-emerald-500/20 rounded-full tech">
+UVM
+</span>
+
+<span class="px-3 py-2 bg-emerald-500/20 rounded-full tech">
+CLAUDE AI
+</span>
+
+<span class="px-3 py-2 bg-emerald-500/20 rounded-full tech">
+DMA
+</span>
+
+</div>
+
+</div>
+
+<!-- PROJECT 2 -->
+
+<div class="glass rounded-3xl p-10 chip-border">
+
+<div class="text-cyan-400 tech mb-4">
+PROJECT_02
+</div>
+
+<h3 class="text-3xl font-black mb-6">
+Regression-Aware Check-In Automation
+</h3>
+
+<p class="text-slate-400 leading-8">
+
+Architected a regression-aware check-in
+automation framework integrating
+DesignSync and Cadence vManager to
+enforce regression quality gates and
+improve repository stability.
+
+</p>
+
+<div class="mt-6 flex gap-3 flex-wrap">
+
+<span class="px-3 py-2 bg-cyan-500/20 rounded-full tech">
+VMANAGER
+</span>
+
+<span class="px-3 py-2 bg-cyan-500/20 rounded-full tech">
+DESIGNSYNC
+</span>
+
+</div>
+
+</div>
+
+<!-- PROJECT 3 -->
+
+<div class="glass rounded-3xl p-10 chip-border">
+
+<div class="text-yellow-400 tech mb-4">
+PROJECT_03
+</div>
+
+<h3 class="text-3xl font-black mb-6">
+Automated SVA Generation Engine
+</h3>
+
+<p class="text-slate-400 leading-8">
+
+Designed and implemented a Python-based
+SVA generation engine converting
+Excel verification specifications into
+reusable SystemVerilog assertion checkers.
+
+</p>
+
+<div class="mt-6 flex gap-3 flex-wrap">
+
+<span class="px-3 py-2 bg-yellow-500/20 rounded-full tech">
+PYTHON
+</span>
+
+<span class="px-3 py-2 bg-yellow-500/20 rounded-full tech">
+SVA
+</span>
+
+</div>
+
+</div>
+
+<!-- PROJECT 4 -->
+
+<div class="glass rounded-3xl p-10 chip-border">
+
+<div class="text-purple-400 tech mb-4">
+PROJECT_04
+</div>
+
+<h3 class="text-3xl font-black mb-6">
+AI-Assisted Coverage Closure Framework
+</h3>
+
+<p class="text-slate-400 leading-8">
+
+Accelerated coverage closure using
+Generative AI to identify functional
+coverage gaps and generate optimized
+directed UVM test scenarios.
+
+</p>
+
+<div class="mt-6 flex gap-3 flex-wrap">
+
+<span class="px-3 py-2 bg-purple-500/20 rounded-full tech">
+GEN AI
+</span>
+
+<span class="px-3 py-2 bg-purple-500/20 rounded-full tech">
+COVERAGE
+</span>
+
+</div>
+
+</div>
+
+<!-- PROJECT 5 -->
+
+<div class="glass rounded-3xl p-10 chip-border">
+
+<div class="text-red-400 tech mb-4">
+PROJECT_05
+</div>
+
+<h3 class="text-3xl font-black mb-6">
+APB Register Verification using UVM-RAL
+</h3>
+
+<p class="text-slate-400 leading-8">
+
+Implemented APB register verification
+using UVM-RAL through register modeling,
+field configuration, access policies and
+frontdoor/backdoor validation.
+
+</p>
+
+<div class="mt-6 flex gap-3 flex-wrap">
+
+<span class="px-3 py-2 bg-red-500/20 rounded-full tech">
+APB
+</span>
+
+<span class="px-3 py-2 bg-red-500/20 rounded-full tech">
+RAL
+</span>
+
+</div>
+
+</div>
+
+<!-- PROJECT 6 -->
+
+<div class="glass rounded-3xl p-10 chip-border">
+
+<div class="text-green-400 tech mb-4">
+PROJECT_06
+</div>
+
+<h3 class="text-3xl font-black mb-6">
+Reusable UVM Verification Environment
+</h3>
+
+<p class="text-slate-400 leading-8">
+
+Developed reusable UVM verification
+components including driver, monitor,
+sequencer, agent and scoreboard supporting
+constrained-random verification and
+coverage collection.
+
+</p>
+
+<div class="mt-6 flex gap-3 flex-wrap">
+
+<span class="px-3 py-2 bg-green-500/20 rounded-full tech">
+UVM
+</span>
+
+<span class="px-3 py-2 bg-green-500/20 rounded-full tech">
+CRV
+</span>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+<!-- ================================================= -->
+<!-- SILICON SIGNOFF CENTER -->
+<!-- ================================================= -->
+
+<section
+class="py-40 px-6">
+
+<div class="max-w-6xl mx-auto">
+
+<div
+class="glass rounded-[50px] p-20 text-center chip-border">
+
+<div
+class="w-32 h-32 rounded-full bg-emerald-500 mx-auto flex items-center justify-center shadow-[0_0_80px_#10b981]">
+
+<svg
+xmlns="http://www.w3.org/2000/svg"
+fill="none"
+viewBox="0 0 24 24"
+stroke-width="2"
+stroke="currentColor"
+class="w-16 h-16 text-black">
+
+<path
+stroke-linecap="round"
+stroke-linejoin="round"
+d="M4.5 12.75l6 6 9-13.5"/>
+
+</svg>
+
+</div>
+
+<h2
+class="mt-10 text-5xl md:text-7xl font-black neon">
+
+SIMULATION COMPLETE
+
+</h2>
+
+<h3
+class="mt-6 text-3xl md:text-5xl font-black text-emerald-400">
+
+ALL CHECKERS PASSED
+
+</h3>
+
+<p
+class="mt-8 text-xl text-slate-400 max-w-3xl mx-auto">
+
+Functional coverage achieved.
+Assertions passing.
+Register models synchronized.
+Regression complete.
+
+Ready for tapeout.
+
+</p>
+
+<div
+class="mt-12 flex flex-wrap justify-center gap-6 tech">
+
+<div class="glass px-6 py-4 rounded-xl">
+COVERAGE : 100%
+</div>
+
+<div class="glass px-6 py-4 rounded-xl">
+ASSERTIONS : PASS
+</div>
+
+<div class="glass px-6 py-4 rounded-xl">
+REGRESSIONS : PASS
+</div>
+
+<div class="glass px-6 py-4 rounded-xl">
+SIGNOFF : APPROVED
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+<!-- ================================================= -->
+<!-- PART 3 END -->
+<!-- PART 4 STARTS NEXT -->
+<!-- ================================================= -->
+ <!-- ================================================= -->
+<!-- CONTACT SECTION -->
+<!-- ================================================= -->
+
+<section
+id="contact"
+class="py-32 px-6">
+
+<div class="max-w-5xl mx-auto text-center">
+
+<p class="tech text-emerald-400 text-xs tracking-[4px]">
+ // CONTACT_INTERFACE
+</p>
+
+<h2 class="text-5xl md:text-7xl font-black mt-4">
+
+CONNECT
+
+<span class="text-emerald-400 neon">
+WITH ME
+</span>
+
+</h2>
+
+<p class="mt-8 text-xl text-slate-400">
+
+Open to Design Verification,
+UVM, AI Verification,
+SoC Verification and DV Automation opportunities.
+
+</p>
+
+<div class="grid md:grid-cols-3 gap-8 mt-16">
+
+<div class="glass rounded-3xl p-8">
+
+<div class="text-3xl mb-4">
+📧
+</div>
+
+<h3 class="font-bold">
+EMAIL
+</h3>
+
+<p class="mt-2 text-slate-400 break-all">
+veekshithshetty653@gmail.com
+</p>
+
+</div>
+
+<div class="glass rounded-3xl p-8">
+
+<div class="text-3xl mb-4">
+💻
+</div>
+
+<h3 class="font-bold">
+GITHUB
+</h3>
+
+<p class="mt-2 text-slate-400">
+github.com/veekshithsshetty
+</p>
+
+</div>
+
+<div class="glass rounded-3xl p-8">
+
+<div class="text-3xl mb-4">
+📍
+</div>
+
+<h3 class="font-bold">
+LOCATION
+</h3>
+
+<p class="mt-2 text-slate-400">
+Karnataka, India
+</p>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+<!-- ================================================= -->
+<!-- FOOTER -->
+<!-- ================================================= -->
+
+<footer
+class="border-t border-emerald-500/10 py-10 px-6">
+
+<div class="max-w-7xl mx-auto">
+
+<div
+class="flex flex-col md:flex-row justify-between items-center gap-6">
+
+<div>
+
+<h3 class="font-black text-2xl neon">
+SILICON VERIFIED
+</h3>
+
+<p class="tech text-xs text-emerald-400 mt-2">
+DESIGN VERIFICATION COMMAND CENTER
+</p>
+
+</div>
+
+<div class="tech text-xs text-emerald-400">
+
+SYSTEM STATUS : PASS
+
+</div>
+
+</div>
+
+<div
+class="mt-8 grid md:grid-cols-4 gap-4 tech text-xs">
+
+<div class="glass p-4 rounded-xl">
+Functional Coverage : 100%
+</div>
+
+<div class="glass p-4 rounded-xl">
+Assertions : PASS
+</div>
+
+<div class="glass p-4 rounded-xl">
+Regressions : PASS
+</div>
+
+<div class="glass p-4 rounded-xl">
+Tapeout : READY
+</div>
+
+</div>
+
+<div class="mt-10 text-center text-slate-500 tech text-xs">
+
+Designed & Verified by
+<span class="text-emerald-400">
+Veekshith S Shetty
+</span>
+
+</div>
+
+</div>
+
+</footer>
+
+<!-- ================================================= -->
+<!-- MATRIX RAIN CANVAS -->
+<!-- ================================================= -->
+
+<canvas
+id="matrixCanvas"
+class="fixed inset-0 pointer-events-none z-[1] opacity-20">
+</canvas>
+
+<!-- ================================================= -->
+<!-- JAVASCRIPT -->
+<!-- ================================================= -->
+
+<script>
+
+gsap.registerPlugin(ScrollTrigger);
+
+/* ========================================= */
+/* BOOT ANIMATION */
+/* ========================================= */
+
+const tl = gsap.timeline();
+
+tl.to("#log2",{opacity:1,duration:.3})
+.to("#log3",{opacity:1,duration:.3})
+.to("#log4",{opacity:1,duration:.3})
+.to("#log5",{opacity:1,duration:.3})
+.to("#log6",{opacity:1,duration:.3})
+.to("#progressBar",{
+width:"100%",
+duration:2
+})
+.to("#enterBtn",{
+opacity:1,
+pointerEvents:"all"
+});
+
+document
+.getElementById("enterBtn")
+.addEventListener("click",()=>{
+
+gsap.to("#bootScreen",{
+
+opacity:0,
+duration:1,
+
+onComplete:()=>{
+
+document
+.getElementById("bootScreen")
+.remove();
+
+document.body.classList.remove("loading");
+
+}
+
+});
+
+gsap.to("#heroTitle",{
+opacity:1,
+y:-20,
+duration:1
+});
+
+gsap.to("#heroDesc",{
+opacity:1,
+delay:.5,
+duration:1
+});
+
+gsap.to("#heroButtons",{
+opacity:1,
+delay:1,
+duration:1
+});
+
+});
+
+/* ========================================= */
+/* COUNTERS */
+/* ========================================= */
+
+const counters =
+document.querySelectorAll(".counter");
+
+counters.forEach(counter=>{
+
+const target =
++counter.getAttribute("data-target");
+
+const updateCounter=()=>{
+
+const current=
++counter.innerText;
+
+const increment=
+target/100;
+
+if(current<target){
+
+counter.innerText=
+Math.ceil(current+increment);
+
+setTimeout(updateCounter,20);
+
+}else{
+
+counter.innerText=target;
+
+}
+
+};
+
+updateCounter();
+
+});
+
+/* ========================================= */
+/* PACKET ANIMATION */
+/* ========================================= */
+
+if(document.getElementById("packet")){
+
+gsap.to("#packet",{
+
+x:"100%",
+repeat:-1,
+duration:2,
+ease:"linear"
+
+});
+
+}
+
+/* ========================================= */
+/* SCROLL ANIMATIONS */
+/* ========================================= */
+
+gsap.utils.toArray("section").forEach(sec=>{
+
+gsap.from(sec,{
+
+opacity:0,
+y:80,
+
+scrollTrigger:{
+
+trigger:sec,
+start:"top 80%"
+
+}
+
+});
+
+});
+
+/* ========================================= */
+/* CHIP PARALLAX */
+/* ========================================= */
+
+const chip =
+document.getElementById("chipCore");
+
+document.addEventListener("mousemove",(e)=>{
+
+if(!chip) return;
+
+let x =
+(window.innerWidth/2-e.clientX)/30;
+
+let y =
+(window.innerHeight/2-e.clientY)/30;
+
+chip.style.transform=
+`rotateY(${x}deg) rotateX(${-y}deg)`;
+
+});
+
+/* ========================================= */
+/* MATRIX RAIN */
+/* ========================================= */
+
+const canvas =
+document.getElementById("matrixCanvas");
+
+const ctx =
+canvas.getContext("2d");
+
+canvas.width=
+window.innerWidth;
+
+canvas.height=
+window.innerHeight;
+
+const chars=
+"AXI APB UVM RAL SVA DMA AI";
+
+const letters=
+chars.split("");
+
+const fontSize=14;
+
+const columns=
+canvas.width/fontSize;
+
+const drops=[];
+
+for(let x=0;x<columns;x++){
+
+drops[x]=1;
+
+}
+
+function drawMatrix(){
+
+ctx.fillStyle=
+"rgba(0,0,0,0.08)";
+
+ctx.fillRect(
+0,
+0,
+canvas.width,
+canvas.height
+);
+
+ctx.fillStyle=
+"#10b981";
+
+ctx.font=
+fontSize+"px monospace";
+
+for(let i=0;i<drops.length;i++){
+
+const text=
+letters[
+Math.floor(
+Math.random()*letters.length
+)
+];
+
+ctx.fillText(
+
+text,
+
+i*fontSize,
+
+drops[i]*fontSize
+
+);
+
+if(
+
+drops[i]*fontSize
+>
+canvas.height
+
+&&
+
+Math.random()>0.975
+
+){
+
+drops[i]=0;
+
+}
+
+drops[i]++;
+
+}
+
+}
+
+setInterval(drawMatrix,35);
+
+/* ========================================= */
+/* THREE JS CHIP PARTICLES */
+/* ========================================= */
+
+const scene =
+new THREE.Scene();
+
+const camera =
+new THREE.PerspectiveCamera(
+
+75,
+
+window.innerWidth/
+window.innerHeight,
+
+0.1,
+
+1000
+
+);
+
+const renderer =
+new THREE.WebGLRenderer({
+
+canvas:
+document.getElementById("threeCanvas"),
+
+alpha:true
+
+});
+
+renderer.setSize(
+
+window.innerWidth,
+
+window.innerHeight
+
+);
+
+const geometry =
+new THREE.BufferGeometry();
+
+const vertices=[];
+
+for(let i=0;i<3000;i++){
+
+vertices.push(
+
+THREE.MathUtils.randFloatSpread(400)
+
+);
+
+vertices.push(
+
+THREE.MathUtils.randFloatSpread(400)
+
+);
+
+vertices.push(
+
+THREE.MathUtils.randFloatSpread(400)
+
+);
+
+}
+
+geometry.setAttribute(
+
+'position',
+
+new THREE.Float32BufferAttribute(
+vertices,
+3
+)
+
+);
+
+const material =
+new THREE.PointsMaterial({
+
+size:1.5,
+color:0x10b981
+
+});
+
+const particles =
+new THREE.Points(
+geometry,
+material
+);
+
+scene.add(particles);
+
+camera.position.z=120;
+
+function animate(){
+
+requestAnimationFrame(animate);
+
+particles.rotation.y+=0.0008;
+
+particles.rotation.x+=0.0004;
+
+renderer.render(
+scene,
+camera
+);
+
+}
+
+animate();
+
+window.addEventListener(
+
+'resize',
+
+()=>{
+
+camera.aspect=
+window.innerWidth/
+window.innerHeight;
+
+camera.updateProjectionMatrix();
+
+renderer.setSize(
+
+window.innerWidth,
+
+window.innerHeight
+
+);
+
+}
+
+);
+
+</script>
+
+</body>
+
+</html>
